@@ -1,4 +1,4 @@
-from operation import Operation
+from resultados import Resultado
 import pandas as pd
 from sklearn import linear_model
 from sklearn import ensemble
@@ -21,20 +21,58 @@ def train():
 
   records = []
   for v  in collection.find({}):
-      op = Operation()
-      op.v1 = v["v1"]
-      op.v2 = v["v2"]
-      op.ellapsed = v["ellapsed"] 
-      records.append(op.toTuple())
+      res = Resultado()
+      res.t_pulsado.append(v["letra1"])
+      res.t_pulsado.append(v["letra2"])
+      res.t_pulsado.append(v["letra3"])
+      res.t_pulsado.append(v["letra4"])
+      res.t_pulsado.append(v["letra5"])
+      res.t_pulsado.append(v["letra6"])
+      res.t_pulsado.append(v["letra7"])
+      res.t_pulsado.append(v["letra8"])
+      res.t_pulsado.append(v["letra9"])
+      res.t_pulsado.append(v["letra10"])
+      res.t_pulsado.append(v["letra11"])
+      res.t_pulsado.append(v["letra12"])
+      res.t_pulsado.append(v["letra13"])
+      res.t_pulsado.append(v["letra14"])
+      res.t_pulsado.append(v["letra15"])
+      res.t_pulsado.append(v["letra16"])
+      res.t_pulsado.append(v["letra17"])
+      res.t_pulsado.append(v["letra18"])
+      res.t_pulsado.append(v["letra19"])
+      res.t_vuelo.append(v["vuelo1"])
+      res.t_vuelo.append(v["vuelo2"])
+      res.t_vuelo.append(v["vuelo3"])
+      res.t_vuelo.append(v["vuelo4"])
+      res.t_vuelo.append(v["vuelo5"])
+      res.t_vuelo.append(v["vuelo6"])
+      res.t_vuelo.append(v["vuelo7"])
+      res.t_vuelo.append(v["vuelo8"])
+      res.t_vuelo.append(v["vuelo9"])
+      res.t_vuelo.append(v["vuelo10"])
+      res.t_vuelo.append(v["vuelo11"])
+      res.t_vuelo.append(v["vuelo12"])
+      res.t_vuelo.append(v["vuelo13"])
+      res.t_vuelo.append(v["vuelo14"])
+      res.t_vuelo.append(v["vuelo15"])
+      res.t_vuelo.append(v["vuelo16"])
+      res.t_vuelo.append(v["vuelo17"])
+      res.t_vuelo.append(v["vuelo18"])
+      res.usuario=v["usuario"]
+      records.append(res.toTuple())
 
-  features = ["v1", "v2", "isEven", "isZero", "nDigits", "carryOn"]
-  target = "ellapsed"
+  features = ["letra1","letra2","letra3","letra4","letra5","letra6","letra7","letra8","letra9","letra10",
+              "letra11","letra12","letra13","letra14","letra15","letra16","letra17","letra18","letra19",
+              "vuelo1","vuelo2","vuelo3","vuelo4","vuelo5","vuelo6","vuelo7","vuelo8","vuelo9","vuelo10",
+              "vuelo11","vuelo12","vuelo13","vuelo14","vuelo15","vuelo16","vuelo17","vuelo18"]
+  target = "usuario"
 
   labels =  features + [target]
   df = pd.DataFrame.from_records(records, columns = labels)
   print ("Before filtering ", df.shape)
 
-  df = df[df.ellapsed < 10]
+  df = df[df.usuario < 10]
 
   print ("After filtering ", df.shape)
 

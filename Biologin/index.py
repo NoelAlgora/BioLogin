@@ -39,6 +39,8 @@ def predecir():
     res.usuario = request.form.get('usuario')
     res.t_vuelo = request.form.getlist('fly[]')
     res.t_pulsado = request.form.getlist('hit[]')
+    regr = joblib.load('regr.pkl')
+    res.predict(regr)
     msg = "Segun mi prediccion la frase la ha escrito: "
     return render_template("guessForm.html", myRes = res, Msg = msg)
   else:
@@ -52,7 +54,8 @@ def train():
 
 @app.route("/guess")
 def guess():
-  return render_template("guessForm.html")
+  res = Resultado()
+  return render_template("guessForm.html",myRes = res)
 
 
 

@@ -6,7 +6,7 @@
 	    <form action = "/entrenar" method = "post">
 	   <!-- <p>Primer tiempo de vuelo: {{myRes.t_vuelo[0]}}</p>
 	        <p>Primer tiempo de pulsado: {{myRes.t_pulsado[0]}}</p>
-	        <p>Nombre: {{myRes.usuario}}</p> -->
+	        <p>Nombre: {{myRes.usuario}}</p> --><p><b>{{var}}</b></p>
 	        <p><b>{{Msg}}</b></p>
 	     	<label>Escoge tu nombre:</label> 
 	     	<select name="usuario">
@@ -22,6 +22,8 @@
 	    	var firstKeyPressed = 0;
 			$( document ).ready(function() {
 	   			firstKeyPressed = 0;
+	   			cont1 = 0;
+	   			cont2 = 0;
 			});
 			$("#frase").keydown(function(e) {
 				//para tiempo pulsado
@@ -35,7 +37,8 @@
 			                name: 'fly[]',
 			                value: duration,
 			        }).appendTo('form');
-	
+				console.log("Vuelo: ", cont2,duration);
+				cont2++;
 	    		fly = 0;
 			});
 	    
@@ -48,6 +51,8 @@
 			        name: 'hit[]',
 			        value: duration,
 			    }).appendTo('form');
+	    		console.log("Pulsado: ", cont1,duration);
+	    		cont1++;
 	    		pressed[e.which] = 0;
 	    		//para tiempo vuelo
 	    		firstKeyPressed = 1;
