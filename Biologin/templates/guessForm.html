@@ -1,0 +1,50 @@
+<html>
+	<head>
+	  	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	</head>
+   <body>
+   		<p><b>{{Msg}}</b></p>
+      <form action = "/predecir" method = "post">
+         <p>Intoduce <b>"Tres tristes tigres"</b></p>
+         <p><input id="frase" type = "text" name = "value" id="output" autofocus></p>
+         <a href="/train">Entrenar Más</a>
+      </form>
+     <script type="text/javascript">
+     		pressed = {};
+	    	var firstKeyPressed = 0;
+			$( document ).ready(function() {
+	   			firstKeyPressed = 0;
+			});
+			$("#frase").keydown(function(e) {
+				//para tiempo pulsado
+			    if ( pressed[e.which] || e.which == 16 || e.which == 13) return;
+			    pressed[e.which] = e.timeStamp;
+			    //para tiempo vuelo
+			    if ( !firstKeyPressed ) return;
+	    		var duration = ( e.timeStamp - fly) / 1000;
+	    		$('<input>').attr({
+			                type: 'hidden',
+			                name: 'fly[]',
+			                value: duration,
+			        }).appendTo('form');
+	
+	    		fly = 0;
+			});
+	    
+			$("#frase").keyup(function(e) {
+				//para tiempo pulsado
+	    		if ( !pressed[e.which] || e.which == 16 || e.which == 13) return;
+	    		var duration = ( e.timeStamp - pressed[e.which] ) / 1000;
+	    		$('<input>').attr({
+			        type: 'hidden',
+			        name: 'hit[]',
+			        value: duration,
+			    }).appendTo('form');
+	    		pressed[e.which] = 0;
+	    		//para tiempo vuelo
+	    		firstKeyPressed = 1;
+	    		fly = e.timeStamp;
+			});
+	</script>
+   </body>
+</html>

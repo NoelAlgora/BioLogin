@@ -1,0 +1,58 @@
+<html>
+	<head>
+	  	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	</head>
+    <body>
+	    <form action = "/entrenar" method = "post">
+	   <!-- <p>Primer tiempo de vuelo: {{myRes.t_vuelo[0]}}</p>
+	        <p>Primer tiempo de pulsado: {{myRes.t_pulsado[0]}}</p>
+	        <p>Nombre: {{myRes.usuario}}</p> -->
+	        <p><b>{{Msg}}</b></p>
+	     	<label>Escoge tu nombre:</label> 
+	     	<select name="usuario">
+			  	<option value="Noel">Noel</option>
+			  	<option value="Ivan">Ivan</option>
+			</select> 
+	        <p><input id="frase" type = "text" name = "value" autofocus></p>
+	        <a href="/guess">Prueba el Predictor</a>
+	    </form>
+
+    	<script>
+	    	pressed = {};
+	    	var firstKeyPressed = 0;
+			$( document ).ready(function() {
+	   			firstKeyPressed = 0;
+			});
+			$("#frase").keydown(function(e) {
+				//para tiempo pulsado
+			    if ( pressed[e.which] || e.which == 16 || e.which == 13) return;
+			    pressed[e.which] = e.timeStamp;
+			    //para tiempo vuelo
+			    if ( !firstKeyPressed ) return;
+	    		var duration = ( e.timeStamp - fly) / 1000;
+	    		$('<input>').attr({
+			                type: 'hidden',
+			                name: 'fly[]',
+			                value: duration,
+			        }).appendTo('form');
+	
+	    		fly = 0;
+			});
+	    
+			$("#frase").keyup(function(e) {
+				//para tiempo pulsado
+	    		if ( !pressed[e.which] || e.which == 16 || e.which == 13) return;
+	    		var duration = ( e.timeStamp - pressed[e.which] ) / 1000;
+	    		$('<input>').attr({
+			        type: 'hidden',
+			        name: 'hit[]',
+			        value: duration,
+			    }).appendTo('form');
+	    		pressed[e.which] = 0;
+	    		//para tiempo vuelo
+	    		firstKeyPressed = 1;
+	    		fly = e.timeStamp;
+			});
+		</script>
+   </body>
+</html>
