@@ -6,17 +6,34 @@ class Resultado():
     t_pulsado = []
     t_vuelo = []
     usuario = ""
+    def toFloatHit(self,list):
+        for item in list:
+            self.t_pulsado.append(float(item))
+    def toFloatFly(self,list):
+        for item in list:
+            self.t_vuelo.append(float(item))
 
     def toTuple(self):
-        return (self.v1, self.v2, self.isEven(), 
-                self.isZero(), self.digitNumber(), 
-                self.carryOn(), self.ellapsed)
+        if self.usuario == "Noel":
+            target = 0
+        else:
+            target = 1
+        return (self.t_pulsado[0],self.t_pulsado[1],self.t_pulsado[2],self.t_pulsado[3],
+                self.t_pulsado[4],self.t_pulsado[5], self.t_pulsado[6],self.t_pulsado[7],
+                self.t_pulsado[8], self.t_pulsado[9],self.t_pulsado[10],self.t_pulsado[11],
+                self.t_pulsado[12],self.t_pulsado[13],self.t_pulsado[14],self.t_pulsado[15],
+                self.t_pulsado[16],self.t_pulsado[17],self.t_pulsado[18],
+                self.t_vuelo[0],self.t_vuelo[1],self.t_vuelo[2],self.t_vuelo[3],self.t_vuelo[4],
+                self.t_vuelo[5], self.t_vuelo[6],self.t_vuelo[7],self.t_vuelo[8],self.t_vuelo[9],
+                self.t_vuelo[10],self.t_vuelo[11], self.t_vuelo[12],self.t_vuelo[13],self.t_vuelo[14],
+                self.t_vuelo[15],self.t_vuelo[16],self.t_vuelo[17],
+                target)
     
     def predict(self, model):
         self.prediction = model.predict([self.toTuple()[:-1]])[0]
 
     def save(self):
-        if usuario == "Noel":
+        if self.usuario == "Noel":
             target = 0
         else:
             target = 1
