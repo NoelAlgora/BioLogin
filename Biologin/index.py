@@ -13,50 +13,44 @@ app = Flask(__name__)
 def selectAction():
   return render_template("selectForm.html")
 
-
-@app.route("/entrenar", methods=['POST'])
+@app.route("/entrenar", methods=['GET', 'POST'])
 def entrenar():
   res = Resultado()
-  frase = request.form['value']
-  if frase == "Tres tristes tigres":
-    res.usuario = request.form.get('usuario')
-    fly = request.form.getlist('fly[]')
-    hit = request.form.getlist('hit[]')
-    res.toFloatHit(hit)
-    res.toFloatFly(fly)
-    res.save()
-    msg = "Guardado con exito"
-    return render_template("trainForm.html", myRes = res, Msg = msg)
-  else:
-    msg = "Frase introdcida incorrecta"
-    return render_template("trainForm.html", myRes = res, Msg = msg) 
+  if request.method == 'POST':
+    frase = request.form['value']
+    if frase == "Tres tristes tigres":
+      res.usuario = request.form.get('usuario')
+      fly = request.form.getlist('fly[]')
+      hit = request.form.getlist('hit[]')
+      res.toFloatHit(hit)
+      res.toFloatFly(fly)
+      res.save()
+      msg = "Guardado con exito"
+      return render_template("trainForm.html", myRes = res, Msg = msg)
+    else:
+      msg = "Frase introdcida incorrecta"
+      return render_template("trainForm.html", myRes = res, Msg = msg)
+  if request.method == 'GET':
+    return render_template("trainForm.html",myRes = res)
 
-@app.route("/predecir", methods=['POST'])
+@app.route("/predecir", methods=['GET','POST'])
 def predecir():
   res = Resultado()
-  frase = request.form['value']
-  if frase == "Tres tristes tigres":
-    res.usuario = request.form.get('usuario')
-    res.t_vuelo = request.form.getlist('fly[]')
-    res.t_pulsado = request.form.getlist('hit[]')
-    regr = joblib.load('regr.pkl')
-    res.predict(regr)
-    msg = "Segun mi prediccion la frase la ha escrito: "
-    return render_template("guessForm.html", myRes = res, Msg = msg)
-  else:
-    msg = "Frase introdcida incorrecta"
-    return render_template("guessForm.html", myRes = res, Msg = msg) 
-
-@app.route("/train")
-def train():
-  res = Resultado()
-  return render_template("trainForm.html",myRes = res)
-
-@app.route("/guess")
-def guess():
-  res = Resultado()
-  return render_template("guessForm.html",myRes = res)
-
+  if request.method == 'POST':
+    frase = request.form['value']
+    if frase == "Tres tristes tigres":
+      res.usuario = request.form.get('usuario')
+      res.t_vuelo = request.form.getlist('fly[]')
+      res.t_pulsado = request.form.getlist('hit[]')
+      regr = joblib.load('regr.pkl')
+      res.predict(regr)
+      msg = "Segun mi prediccion la frase la ha escrito: "
+      return render_template("guessForm.html", myRes = res, Msg = msg)
+    else:
+      msg = "Frase introdcida incorrecta"
+      return render_template("guessForm.html", myRes = res, Msg = msg)
+  if request.method == 'GET':
+    return render_template("guessForm.html",myRes = res)
 
 
 app.debug = True

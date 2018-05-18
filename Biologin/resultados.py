@@ -21,10 +21,6 @@ class Resultado():
         self.t_vuelo.append(val)
 
     def toTuple(self):
-        if self.usuario == "Noel":
-            target = 0
-        else:
-            target = 1
         return (self.t_pulsado[0],self.t_pulsado[1],self.t_pulsado[2],self.t_pulsado[3],
                 self.t_pulsado[4],self.t_pulsado[5], self.t_pulsado[6],self.t_pulsado[7],
                 self.t_pulsado[8], self.t_pulsado[9],self.t_pulsado[10],self.t_pulsado[11],
@@ -34,14 +30,14 @@ class Resultado():
                 self.t_vuelo[5], self.t_vuelo[6],self.t_vuelo[7],self.t_vuelo[8],self.t_vuelo[9],
                 self.t_vuelo[10],self.t_vuelo[11], self.t_vuelo[12],self.t_vuelo[13],self.t_vuelo[14],
                 self.t_vuelo[15],self.t_vuelo[16],self.t_vuelo[17],
-                target)
+                self.usuario)
     
     def predict(self, model):
         prediction = model.predict([self.toTuple()[:-1]])[0]
-        if prediction:
-            self.usuario_predicho = "Ivan"
-        else:
+        if prediction == 0:
             self.usuario_predicho = "Noel"
+        else:
+            self.usuario_predicho = "Ivan"
 
     def save(self):
         if self.usuario == "Noel":
@@ -94,7 +90,3 @@ class Resultado():
         db = client['myDB']
         collection = db["biologin"]
         collection.insert_one(biolog)
-
-
-
-

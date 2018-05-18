@@ -1,63 +1,57 @@
 <html>
 	<head>
-	  	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-	</head>
-    <body>
-	    <form action = "/entrenar" method = "post">
-	   <!-- <p>Primer tiempo de vuelo: {{myRes.t_vuelo[0]}}</p>
-	        <p>Primer tiempo de pulsado: {{myRes.t_pulsado[0]}}</p>
-	        <p>Nombre: {{myRes.usuario}}</p> --><p><b>{{var}}</b></p>
-	        <p><b>{{Msg}}</b></p>
-	     	<label>Escoge tu nombre:</label> 
-	     	<select name="usuario">
-			  	<option value="Noel">Noel</option>
-			  	<option value="Ivan">Ivan</option>
-			</select> 
-	        <p><input id="frase" type = "text" name = "value" autofocus></p>
-	        <a href="/guess">Prueba el Predictor</a>
-	    </form>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" chrome="1">
 
-    	<script>
-	    	pressed = {};
-	    	var firstKeyPressed = 0;
-			$( document ).ready(function() {
-	   			firstKeyPressed = 0;
-	   			cont1 = 0;
-	   			cont2 = 0;
-			});
-			$("#frase").keydown(function(e) {
-				//para tiempo pulsado
-			    if ( pressed[e.which] || e.which == 16 || e.which == 13) return;
-			    pressed[e.which] = e.timeStamp;
-			    //para tiempo vuelo
-			    if ( !firstKeyPressed ) return;
-	    		var duration = ( e.timeStamp - fly) / 1000;
-	    		$('<input>').attr({
-			                type: 'hidden',
-			                name: 'fly[]',
-			                value: duration,
-			        }).appendTo('form');
-				console.log("Vuelo: ", cont2,duration);
-				cont2++;
-	    		fly = 0;
-			});
-	    
-			$("#frase").keyup(function(e) {
-				//para tiempo pulsado
-	    		if ( !pressed[e.which] || e.which == 16 || e.which == 13) return;
-	    		var duration = ( e.timeStamp - pressed[e.which] ) / 1000;
-	    		$('<input>').attr({
-			        type: 'hidden',
-			        name: 'hit[]',
-			        value: duration,
-			    }).appendTo('form');
-	    		console.log("Pulsado: ", cont1,duration);
-	    		cont1++;
-	    		pressed[e.which] = 0;
-	    		//para tiempo vuelo
-	    		firstKeyPressed = 1;
-	    		fly = e.timeStamp;
-			});
-		</script>
-   </body>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{{ url_for('static',filename='css/site.css') }}">
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">BIOLOGIN</a>
+					</div>
+					<div id="navbar" class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
+							<li><a href="/">Home</a></li>
+							<li class="active"><a href="#">ENTRENAR</a></li>
+							<li><a href="/predecir">PREDECIR</a></li>
+						</ul>
+				</div><!--/.nav-collapse -->
+			</div>
+		</nav>
+		<!-- Page Content -->
+		<div class="container">
+			<div class="body-content text-center">
+				<h1>FORMULARIO DE ENTRENAMIENTO</h1>
+				<form action = "/entrenar" method = "post">
+					<!-- <p>Primer tiempo de vuelo: {{myRes.t_vuelo[0]}}</p>
+					<p>Primer tiempo de pulsado: {{myRes.t_pulsado[0]}}</p>
+					<p>Nombre: {{myRes.usuario}}</p> -->
+					<p><b>{{var}}</b></p>
+					<p><b>{{Msg}}</b></p>
+					<label>Escoge tu nombre:</label> 
+					<select name="usuario">
+						<option value="Noel">Noel</option>
+						<option value="Ivan">Ivan</option>
+					</select> 
+					<p><input id="frase" type = "text" name = "value" autofocus></p>
+					<a class="btn btn-success btn-lg" href="/predecir">Prueba el Predictor</a>
+				</form>
+			</div>
+		</div>
+		<!-- /.container -->
+
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src= "{{ url_for('static',filename='js/key-input.js') }}"></script>
+	</body>
 </html>
