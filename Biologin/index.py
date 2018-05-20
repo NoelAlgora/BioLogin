@@ -40,8 +40,10 @@ def predecir():
     frase = request.form['value']
     if frase == "Tres tristes tigres":
       res.usuario = request.form.get('usuario')
-      res.t_vuelo = request.form.getlist('fly[]')
-      res.t_pulsado = request.form.getlist('hit[]')
+      fly = request.form.getlist('fly[]')
+      hit = request.form.getlist('hit[]')
+      res.toFloatHit(hit)
+      res.toFloatFly(fly)
       regr = joblib.load('regr.pkl')
       res.predict(regr)
       msg = "Segun mi prediccion la frase la ha escrito: "
