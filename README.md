@@ -2,9 +2,9 @@
 Project develovep by @DOSD and @NoelAlgora
 
 # Requirements
-Flask
-Pymongo
-Sklearn
-Pandas
-Numpy
-Scipy
+* Flask
+* Pymongo
+* Sklearn
+* Pandas
+* Numpy
+* Scipy
