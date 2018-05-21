@@ -8,6 +8,7 @@ class Resultado():
     usuario = ""
     usuario_predicho = ""
     prediction = ""
+    
     def toFloatHit(self,list):
         for item in list:
             self.t_pulsado.append(int(item))
