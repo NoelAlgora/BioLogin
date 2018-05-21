@@ -1,5 +1,5 @@
 # MachineLearning Biologin
-Project develovep by @DOSD and @NoelAlgora
+Project developed by @DOSD and @NoelAlgora
 
 # Requirements
 * Flask
