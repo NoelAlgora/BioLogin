@@ -16,6 +16,8 @@ def selectAction():
 @app.route("/entrenar", methods=['GET', 'POST'])
 def entrenar():
   res = Resultado()
+  res.t_pulsado = []
+  res.t_vuelo = []
   if request.method == 'POST':
     frase = request.form['value']
     if frase == "Tres tristes tigres":
@@ -36,15 +38,16 @@ def entrenar():
 @app.route("/predecir", methods=['GET','POST'])
 def predecir():
   res = Resultado()
+  res.t_pulsado = []
+  res.t_vuelo = []
   if request.method == 'POST':
     frase = request.form['value']
     if frase == "Tres tristes tigres":
-      res.usuario = request.form.get('usuario')
       fly = request.form.getlist('fly[]')
       hit = request.form.getlist('hit[]')
       res.toFloatHit(hit)
       res.toFloatFly(fly)
-      regr = joblib.load('regr.pkl')
+      regr = joblib.load('gbc.pkl')
       res.predict(regr)
       msg = "Segun mi prediccion la frase la ha escrito: "
       return render_template("guessForm.html", myRes = res, Msg = msg)

@@ -7,12 +7,13 @@ class Resultado():
     t_vuelo = []
     usuario = ""
     usuario_predicho = ""
+    prediction = ""
     def toFloatHit(self,list):
         for item in list:
-            self.t_pulsado.append(float(item))
+            self.t_pulsado.append(int(item))
     def toFloatFly(self,list):
         for item in list:
-            self.t_vuelo.append(float(item))
+            self.t_vuelo.append(int(item))
 
     def tPulsadoAdd(self,val):
         self.t_pulsado.append(val)
@@ -33,17 +34,17 @@ class Resultado():
                 self.usuario)
     
     def predict(self, model):
-        prediction = model.predict([self.toTuple()[:-1]])[0]
-        if prediction == 0:
+        self.prediction = model.predict([self.toTuple()[:-1]])[0]
+        if self.prediction == 0:
             self.usuario_predicho = "Noel"
         else:
             self.usuario_predicho = "Ivan"
 
     def save(self):
         if self.usuario == "Noel":
-            target = 0
+            target = int(0)
         else:
-            target = 1
+            target = int(1)
         biolog = {
             
             "letra1": self.t_pulsado[0],

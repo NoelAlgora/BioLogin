@@ -6,7 +6,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.externals import joblib
 import time
 
-nObservations = 0
+nObservations = 2
 from pymongo.mongo_client import MongoClient
 
 
@@ -18,7 +18,7 @@ collection = db["biologin"]
 
 def train():
   global nObservations
-
+  
   records = []
   for v  in collection.find({}):
       res = Resultado()
@@ -70,30 +70,26 @@ def train():
 
   labels =  features + [target]
   df = pd.DataFrame.from_records(records, columns = labels)
-  print ("Before filtering ", df.shape)
-
-  df = df[df.usuario < 10]
-
-  print ("After filtering ", df.shape)
+ 
 
   if df.shape[0] <= nObservations:
     return
 
   nObservations = df.shape[0]
-
-  params = {'n_estimators': 500, 'max_depth': 4, 'min_samples_split': 2,
-            'learning_rate': 0.01, 'loss': 'ls'}
-  regr = ensemble.GradientBoostingRegressor(**params)
+  print ("Tamanio", df.shape)
+  params = {'n_estimators': 500, 'max_features' :'log2'}
+  gbc = ensemble.GradientBoostingClassifier(**params)
 
   X = df[features]
   y = df[target]
-  regr  = regr.fit(X, y)
+  gbc = gbc.fit(X,y)
 
 
-  prediction = regr.predict(X)
+  prediction = gbc.predict(X)
+  print("Prediccion", prediction)
   print("Error", mean_squared_error(prediction, y))
 
-  joblib.dump(regr, 'regr.pkl',  protocol=2)
+  joblib.dump(gbc, 'gbc.pkl',  protocol=2)
   print("DUMP")
   return df.shape[0]
 
