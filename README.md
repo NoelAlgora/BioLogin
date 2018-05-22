@@ -1,5 +1,5 @@
 # MachineLearning Biologin
-Project developed by @DOSD and @NoelAlgora
+Project developed by @ivangulyk and @NoelAlgora
 
 # Requirements
 
